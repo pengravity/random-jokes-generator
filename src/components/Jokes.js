@@ -7,7 +7,8 @@ const Jokes = () => {
 
   const URL = 'https://api.chucknorris.io/jokes/random';
 
-  useEffect(() => {
+  const getJoke = () => {
+    setLoading(true);
     fetch(URL)
       .then((response) => {
         return response.json();
@@ -17,23 +18,29 @@ const Jokes = () => {
         setJoke(data);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    getJoke();
   }, []);
 
   return (
     <section className=' --center-all --100vh --bg-primary'>
       <div className='container --card --bg-light --p2 '>
-        <h1>Random Jokes Generator</h1>
+        <h1>Chuck Norris Jokes Generator</h1>
         <div className='--line'></div>
         <br />
         {loading ? (
-          <img src={spinner} alt='loading' width={200} />
+          <img src={spinner} alt='loading' width={150} />
         ) : (
           <>
             <h4>{joke.value}</h4>
           </>
         )}
         <br />
-        <button className='--btn --btn-primary '>Generate Joke</button>{' '}
+        <button onClick={getJoke} className='--btn --btn-primary '>
+          Generate Joke
+        </button>{' '}
       </div>
     </section>
   );
